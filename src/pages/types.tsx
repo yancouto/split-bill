@@ -3,6 +3,7 @@ import React from "react";
 export enum PageType {
     Start,
     Split,
+    Expense,
 }
 
 export type StartState = {
@@ -15,7 +16,13 @@ export type SplitState = {
     people: number,
 };
 
-export type PageState = StartState | SplitState;
+export type ExpenseState = {
+    type: PageType.Expense,
+    left: number,
+    people: number,
+};
 
-// Use this context getter to switch pages
+export type PageState = StartState | SplitState | ExpenseState;
+
+// use this context getter to switch pages
 export const ChangePage = React.createContext<(p: PageState) => void>(p => { });

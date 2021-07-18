@@ -24,6 +24,7 @@ import '@ionic/react/css/display.css';
 import './theme/variables.css';
 import { useState } from 'react';
 import { ChangePage, PageState, PageType } from './pages/types';
+import Expense from './pages/Expense';
 
 
 const App: React.FC = () => {
@@ -33,6 +34,8 @@ const App: React.FC = () => {
     element = <Start state={page} />;
   } else if (page.type === PageType.Split) {
     element = <Split state={page} />;
+  } else if (page.type === PageType.Expense) {
+    element = <Expense state={page} />;
   }
   return <IonApp>
     <ChangePage.Provider value={setPage}>
