@@ -1,0 +1,8 @@
+{
+  "name": "Split Bill",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react",
+  "id": "ede589bd"
+}
