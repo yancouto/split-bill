@@ -7,14 +7,14 @@ interface Props {
     state: SplitState
 }
 
-type SplitStatus = {
+export type SplitStatus = {
     left: number,
     total_per_person: Map<number, number>,
 }
 
-function derive(s: CurrentSplit): SplitStatus {
+export function derive(s: CurrentSplit): SplitStatus {
     const people: Map<number, number> = new Map();
-    s.all_items.forEach(i => i.per_person.forEach((value, idx) => people.set(idx, people.get(idx) ?? 0 + value)));
+    s.all_items.forEach(i => i.per_person.forEach((value, idx) => people.set(idx, (people.get(idx) ?? 0) + value)));
     const spent = [...people.values()].reduce((acc, cur) => acc + cur, 0);
     return {
         left: s.total - spent,

@@ -1,20 +1,8 @@
 import { IonButton, IonContent, IonHeader, IonInput, IonItem, IonLabel, IonList, IonPage, IonSelect, IonSelectOption, IonTitle } from '@ionic/react';
 import { useContext, useState } from 'react';
+import { parseToFloat } from '../common/utils';
 import './Start.css';
 import { ChangePage, PageType, StartState } from './types';
-
-const parseToFloat = (v?: string | null) => {
-    const parsed = Number.parseFloat(v ?? "");
-    return parsed;
-};
-
-function nullthrows<T>(v: T | null | undefined): T {
-    if (v == null) {
-        throw new Error("null!");
-    } else {
-        return v;
-    }
-}
 
 interface Props {
     state: StartState
@@ -32,7 +20,7 @@ const Start: React.FC<Props> = (props) => {
                 type: PageType.Split,
                 split: {
                     total: val,
-                    names: [...Array(people).keys()].map(i => `Person ${i}`),
+                    names: [...Array(people).keys()].map(i => `Person ${String.fromCharCode('A'.charCodeAt(0) + i)}`),
                     all_items: [],
                 }
             });
