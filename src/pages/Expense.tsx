@@ -52,6 +52,13 @@ const Expense: React.FC<Props> = (props) => {
         });
     }
 
+    function cancel() {
+        changePage({
+            type: PageType.Split,
+            split: props.state.split,
+        });
+    }
+
     return (
         <IonPage>
             <IonHeader>
@@ -71,6 +78,9 @@ const Expense: React.FC<Props> = (props) => {
                     {props.state.split.names.map(componentForPerson)}
                     <IonItem>
                         <IonButton disabled={!valid} expand="block" size="large" onClick={saveExpense}>Save expense</IonButton>
+                    </IonItem>
+                    <IonItem>
+                        <IonButton expand="block" size="large" onClick={cancel}>Delete expense</IonButton>
                     </IonItem>
                 </IonList>
             </IonContent>

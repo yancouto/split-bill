@@ -56,7 +56,7 @@ const Split: React.FC<Props> = (props) => {
                         >Add new item</IonButton>
                     </IonItem>
                     <IonItem>
-                        <IonButton disabled={derived.left === 0} expand="block" size="large" color="danger"
+                        <IonButton expand="block" size="large" color="danger"
                             onClick={startOver}
                         >Start over</IonButton>
                     </IonItem>
