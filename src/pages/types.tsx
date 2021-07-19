@@ -10,16 +10,25 @@ export type StartState = {
     type: PageType.Start,
 };
 
+export type Item = {
+    // idx to value
+    per_person: Map<number, number>
+}
+
+export type CurrentSplit = {
+    total: number,
+    names: string[],
+    all_items: Item[],
+}
+
 export type SplitState = {
     type: PageType.Split,
-    val: number,
-    people: number,
+    split: CurrentSplit,
 };
 
 export type ExpenseState = {
     type: PageType.Expense,
-    left: number,
-    people: number,
+    split: CurrentSplit,
 };
 
 export type PageState = StartState | SplitState | ExpenseState;

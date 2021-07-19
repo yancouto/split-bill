@@ -30,8 +30,11 @@ const Start: React.FC<Props> = (props) => {
         if (valid) {
             changePage({
                 type: PageType.Split,
-                val,
-                people,
+                split: {
+                    total: val,
+                    names: [...Array(people).keys()].map(i => `Person ${i}`),
+                    all_items: [],
+                }
             });
         }
     }
