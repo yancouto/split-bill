@@ -1,9 +1,9 @@
-import { IonButton, IonContent, IonHeader, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonPage, IonSelect, IonSelectOption, IonTitle } from '@ionic/react';
+import { IonButton, IonContent, IonHeader, IonInput, IonItem, IonItemDivider, IonLabel, IonList, IonPage, IonTitle } from '@ionic/react';
 import { useContext, useState } from 'react';
 import { parseToFloat } from '../common/utils';
 import { derive } from './Split';
 import './Start.css';
-import { ChangePage, ExpenseState, PageType, StartState } from './types';
+import { ChangePage, ExpenseState, PageType } from './types';
 
 interface Props {
     state: ExpenseState
