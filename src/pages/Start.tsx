@@ -43,10 +43,7 @@ const Start: React.FC<Props> = (props) => {
                     <IonItem>
                         <IonLabel>People</IonLabel>
                         <IonSelect value={people} interface="popover" onIonChange={e => setPeople(e.detail.value)}>
-                            <IonSelectOption value={2}>2</IonSelectOption>
-                            <IonSelectOption value={3}>3</IonSelectOption>
-                            <IonSelectOption value={4}>4</IonSelectOption>
-                            <IonSelectOption value={5}>5</IonSelectOption>
+                            {[...Array(11).keys()].map(i => i + 2).map(i => <IonSelectOption value={i}>{i}</IonSelectOption>)}
                         </IonSelect>
                     </IonItem>
                     <IonItem>
