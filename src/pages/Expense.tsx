@@ -4,6 +4,7 @@ import { parseToFloat } from '../common/utils';
 import { derive } from './Split';
 import './Start.css';
 import { ChangePage, ExpenseState, PageType } from './types';
+import Dinero from 'dinero.js';
 
 interface Props {
     state: ExpenseState
@@ -11,17 +12,17 @@ interface Props {
 
 const Expense: React.FC<Props> = (props) => {
     const derived = derive(props.state.split);
-    const [price, setPrice] = useState<number>(Number.NaN);
+    const [price, setPrice] = useState<Dinero.Dinero>(Dinero());
     const [sharesPerPerson, setSharesPerPerson] = useState<Map<number, number>>(() => new Map());
     const totalShares = [...sharesPerPerson.values()].reduce((acc, cur) => acc + cur, 0);
-    const valid = price > 0 && totalShares > 0 && price <= derived.left;
+    const valid = price.isPositive() && totalShares > 0 && price.lessThanOrEqual(derived.left);
     const changePage = useContext(ChangePage);
 
     function componentForPerson(name: string, idx: number) {
         const shares = sharesPerPerson.get(idx) ?? 0;
         let part;
-        if (totalShares > 0 && price > 0) {
-            part = <IonLabel>~ ${(price * shares) / totalShares}</IonLabel>;
+        if (totalShares > 0 && price.isPositive()) {
+            part = <IonLabel>~ ${price.multiply(shares).divide(totalShares).toUnit()}</IonLabel>;
         }
         return <IonItem key={idx}>
             <IonLabel>{name}:</IonLabel>
@@ -37,9 +38,9 @@ const Expense: React.FC<Props> = (props) => {
     }
 
     function saveExpense() {
-        const idxToValue: Map<number, number> = new Map();
+        const idxToValue: Map<number, Dinero.Dinero> = new Map();
         for (const [idx, shares] of sharesPerPerson) {
-            idxToValue.set(idx, price * shares / totalShares);
+            idxToValue.set(idx, price.multiply(shares).divide(totalShares));
         }
         const split = props.state.split;
         changePage({
@@ -69,8 +70,8 @@ const Expense: React.FC<Props> = (props) => {
                     <IonItem>
                         <IonLabel>Price:</IonLabel>
                         <IonInput type="number" inputmode="numeric" placeholder="0"
-                            value={price}
-                            onIonChange={e => setPrice(parseToFloat(e.detail.value))} ></IonInput>
+                            value={price.toUnit()}
+                            onIonChange={e => setPrice(Dinero({ amount: 100 * parseToFloat(e.detail.value) }))}></IonInput>
                     </IonItem>
                     <IonItemDivider>
                         <IonLabel>Shares per person</IonLabel>
