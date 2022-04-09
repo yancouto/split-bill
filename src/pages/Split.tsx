@@ -41,13 +41,27 @@ export function derive(s: CurrentSplit): SplitStatus {
 }
 
 const Split: React.FC<Props> = (props) => {
-  const derived = derive(props.state.split);
+  const split = props.state.split;
+  const derived = derive(split);
   const changePage = useContext(ChangePage);
   function addExpense() {
     changePage({
       type: PageType.Expense,
-      split: props.state.split,
+      split: split,
     });
+  }
+  function undoLastItem() {
+    const last = split.all_items.pop();
+    if (last) {
+      changePage({
+        type: PageType.Split,
+        split: {
+          all_items: split.all_items,
+          names: split.names,
+          total: split.total,
+        },
+      });
+    }
   }
   function startOver() {
     changePage({
@@ -67,7 +81,7 @@ const Split: React.FC<Props> = (props) => {
           <IonItemDivider>
             <IonLabel>Items:</IonLabel>
           </IonItemDivider>
-          {props.state.split.all_items.map((it, idx) => (
+          {split.all_items.map((it, idx) => (
             <IonItem key={idx}>
               <IonLabel>
                 $
@@ -80,7 +94,7 @@ const Split: React.FC<Props> = (props) => {
           <IonItemDivider>
             <IonLabel>People:</IonLabel>
           </IonItemDivider>
-          {props.state.split.names.map((name, idx) => (
+          {split.names.map((name, idx) => (
             <IonItem key={idx}>
               <IonLabel>
                 {name}: $
@@ -96,6 +110,16 @@ const Split: React.FC<Props> = (props) => {
               onClick={addExpense}
             >
               Add new item
+            </IonButton>
+          </IonItem>
+          <IonItem>
+            <IonButton
+              disabled={split.all_items.length === 0}
+              expand="block"
+              size="large"
+              onClick={undoLastItem}
+            >
+              Undo last item
             </IonButton>
           </IonItem>
           <IonItem>
