@@ -1,6 +1,8 @@
 import {
   IonButton,
+  IonCol,
   IonContent,
+  IonGrid,
   IonHeader,
   IonInput,
   IonItem,
@@ -8,6 +10,7 @@ import {
   IonLabel,
   IonList,
   IonPage,
+  IonRow,
   IonTitle,
 } from "@ionic/react";
 import { useContext, useState } from "react";
@@ -39,29 +42,42 @@ const Expense: React.FC<Props> = (props) => {
 
   function componentForPerson(name: string, idx: number) {
     const shares = sharesPerPerson.get(idx) ?? 0;
-    let part;
-    if (totalShares > 0 && price.isPositive()) {
-      part = (
-        <IonLabel>
-          ~ ${price.multiply(shares).divide(totalShares).toUnit()}
-        </IonLabel>
-      );
-    }
+    const part = (
+      <IonLabel>
+        ~ $
+        {totalShares > 0 && price.isPositive()
+          ? price.multiply(shares).divide(totalShares).toUnit()
+          : Dinero().toUnit()}
+      </IonLabel>
+    );
+
+    const changeShares = (delta: number) => {
+      const newShares = new Map(sharesPerPerson);
+      newShares.set(idx, shares + delta);
+      setSharesPerPerson(newShares);
+    };
     return (
       <IonItem key={idx}>
-        <IonLabel>{name}:</IonLabel>
-        <IonInput
-          type="number"
-          inputmode="numeric"
-          placeholder="0"
-          value={shares}
-          onIonChange={(e) => {
-            const newShares = new Map(sharesPerPerson);
-            newShares.set(idx, parseToFloat(e.detail.value));
-            setSharesPerPerson(newShares);
-          }}
-        ></IonInput>
-        {part}
+        <IonGrid>
+          <IonRow>
+            <IonCol size="4">{name}:</IonCol>
+            <IonCol>
+              <IonButton
+                onClick={() => changeShares(-1)}
+                disabled={shares === 0}
+              >
+                -
+              </IonButton>
+            </IonCol>
+            <IonCol>
+              <IonLabel className="ion-text-center">{shares}</IonLabel>
+            </IonCol>
+            <IonCol>
+              <IonButton onClick={() => changeShares(1)}>+</IonButton>
+            </IonCol>
+            <IonCol size="4">{part}</IonCol>
+          </IonRow>
+        </IonGrid>
       </IonItem>
     );
   }
