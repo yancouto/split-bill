@@ -26,6 +26,10 @@ import { useState } from 'react';
 import { ChangePage, PageState, PageType } from './pages/types';
 import Expense from './pages/Expense';
 
+/* Dinero.js defaults */
+import Dinero from 'dinero.js'
+Dinero.defaultCurrency = 'USD'
+Dinero.defaultPrecision = 2
 
 const App: React.FC = () => {
   const [page, setPage] = useState<PageState>(() => ({ type: PageType.Start }));

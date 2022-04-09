@@ -1,4 +1,5 @@
 import React from "react";
+import Dinero from "dinero.js"
 
 export enum PageType {
     Start,
@@ -12,11 +13,11 @@ export type StartState = {
 
 export type Item = {
     // idx to value
-    per_person: Map<number, number>
+    per_person: Map<number, Dinero.Dinero>
 }
 
 export type CurrentSplit = {
-    total: number,
+    total: Dinero.Dinero,
     names: string[],
     all_items: Item[],
 }
