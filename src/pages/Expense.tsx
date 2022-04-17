@@ -43,7 +43,7 @@ const Expense: React.FC<Props> = (props) => {
   function componentForPerson(name: string, idx: number) {
     const shares = sharesPerPerson.get(idx) ?? 0;
     const part = (
-      <IonLabel>
+      <IonLabel style={{ "height": "100%", "alignItems": "center", "display": "flex" }}>
         ~ $
         {totalShares > 0 && price.isPositive()
           ? price.multiply(shares).divide(totalShares).toUnit()
