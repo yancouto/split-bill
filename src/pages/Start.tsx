@@ -7,8 +7,6 @@ import {
   IonLabel,
   IonList,
   IonPage,
-  IonSelect,
-  IonSelectOption,
   IonTitle,
 } from "@ionic/react";
 import { useContext, useState } from "react";
@@ -65,17 +63,13 @@ const Start: React.FC<Props> = (props) => {
           </IonItem>
           <IonItem>
             <IonLabel>People</IonLabel>
-            <IonSelect
-              value={people}
-              interface="popover"
-              onIonChange={(e) => setPeople(e.detail.value)}
-            >
-              {[...Array(11).keys()]
-                .map((i) => i + 2)
-                .map((i) => (
-                  <IonSelectOption value={i}>{i}</IonSelectOption>
-                ))}
-            </IonSelect>
+            <IonButton onClick={() => setPeople(Math.max(people - 1, 2))} disabled={people === 2}>
+              -
+            </IonButton>
+            <IonLabel className="ion-text-center">{people}</IonLabel>
+            <IonButton onClick={() => setPeople(people + 1)}>
+              +
+            </IonButton>
           </IonItem>
           <IonItem>
             <IonButton
