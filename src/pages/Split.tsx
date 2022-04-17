@@ -2,6 +2,7 @@ import {
   IonButton,
   IonContent,
   IonHeader,
+  IonInput,
   IonItem,
   IonItemDivider,
   IonLabel,
@@ -13,6 +14,7 @@ import { useContext } from "react";
 import "./Start.css";
 import { ChangePage, CurrentSplit, PageType, SplitState } from "./types";
 import Dinero from "dinero.js";
+import { totalmem } from "os";
 
 interface Props {
   state: SplitState;
@@ -68,6 +70,20 @@ const Split: React.FC<Props> = (props) => {
       type: PageType.Start,
     });
   }
+  function changePersonName(idx: number, name: string | null | undefined) {
+    if (name) {
+      const newNames = [...split.names];
+      newNames[idx] = name;
+      changePage({
+        type: PageType.Split,
+        split: {
+          all_items: split.all_items,
+          total: split.total,
+          names: newNames,
+        }
+      });
+    }
+  }
   return (
     <IonPage>
       <IonHeader>
@@ -96,9 +112,16 @@ const Split: React.FC<Props> = (props) => {
           </IonItemDivider>
           {split.names.map((name, idx) => (
             <IonItem key={idx}>
+              <IonInput
+                type="text"
+                inputmode="text"
+                value={name}
+                onIonChange={(e) => {
+                  changePersonName(idx, e.detail.value);
+                }}
+              ></IonInput>
               <IonLabel>
-                {name}: $
-                {(derived.total_per_person.get(idx) ?? Dinero()).toUnit()}
+                $ {(derived.total_per_person.get(idx) ?? Dinero()).toUnit()}
               </IonLabel>
             </IonItem>
           ))}
