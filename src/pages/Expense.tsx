@@ -36,6 +36,7 @@ const Expense: React.FC<Props> = (props) => {
   );
   const valid =
     price.isPositive() &&
+    !price.isZero() &&
     totalShares > 0 &&
     price.lessThanOrEqual(derived.left);
   const changePage = useContext(ChangePage);
@@ -45,7 +46,7 @@ const Expense: React.FC<Props> = (props) => {
     const part = (
       <IonLabel style={{ "height": "100%", "alignItems": "center", "display": "flex" }}>
         ~ $
-        {totalShares > 0 && price.isPositive()
+        {totalShares > 0 && price.isPositive() && !price.isZero()
           ? price.multiply(shares).divide(totalShares).toUnit()
           : Dinero().toUnit()}
       </IonLabel>

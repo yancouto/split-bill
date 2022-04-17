@@ -22,7 +22,7 @@ interface Props {
 const Start: React.FC<Props> = (props) => {
   const [val, setVal] = useState<Dinero.Dinero>(Dinero());
   const [people, setPeople] = useState<number>(2);
-  const valid = val.isPositive();
+  const valid = val.isPositive() && !val.isZero();
   const changePage = useContext(ChangePage);
 
   function StartSplitting() {
