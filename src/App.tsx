@@ -1,4 +1,5 @@
 import { IonApp } from "@ionic/react";
+import { Storage } from "@ionic/storage";
 import Start from "./pages/Start";
 import Split from "./pages/Split";
 
@@ -21,7 +22,7 @@ import "@ionic/react/css/display.css";
 /* Theme variables */
 import "./theme/variables.css";
 import { useState } from "react";
-import { ChangePage, PageState, PageType } from "./pages/types";
+import { ChangePage, PageState, PageType, stateToString, stateFromString } from "./pages/types";
 import Expense from "./pages/Expense";
 
 /* Dinero.js defaults */
@@ -29,8 +30,23 @@ import Dinero from "dinero.js";
 Dinero.defaultCurrency = "USD";
 Dinero.defaultPrecision = 2;
 
+const storage = new Storage();
+await storage.create();
+console.log("here");
+const STATE_KEY = "state";
+const initialState: PageState = await storage.get(STATE_KEY).then((value) => {
+  if (value) {
+    try {
+      return stateFromString(value);
+    } catch (ex) { console.log(`Failed to load state: ${ex}`) }
+  }
+  return { type: PageType.Start };
+})
+
 const App: React.FC = () => {
-  const [page, setPage] = useState<PageState>(() => ({ type: PageType.Start }));
+  const [page, setPage] = useState<PageState>(() => initialState);
+  // fire and forget
+  storage.set(STATE_KEY, stateToString(page));
   let element;
   if (page.type === PageType.Start) {
     element = <Start state={page} />;
