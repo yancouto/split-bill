@@ -53,7 +53,7 @@ const Expense: React.FC<Props> = (props) => {
 
     const changeShares = (delta: number) => {
       const newShares = new Map(sharesPerPerson);
-      newShares.set(idx, shares + delta);
+      newShares.set(idx, Math.max(shares + delta, 0));
       setSharesPerPerson(newShares);
     };
     return (
@@ -70,7 +70,17 @@ const Expense: React.FC<Props> = (props) => {
               </IonButton>
             </IonCol>
             <IonCol>
-              <IonLabel className="ion-text-center">{shares}</IonLabel>
+              <IonInput
+                type="number"
+                inputmode="numeric"
+                placeholder="0"
+                value={shares}
+                min="0"
+                clearOnEdit={true}
+                onIonChange={(e) => {
+                  changeShares(parseToFloat(e.detail.value) - shares);
+                }}
+              ></IonInput>
             </IonCol>
             <IonCol>
               <IonButton onClick={() => changeShares(1)}>+</IonButton>
@@ -78,7 +88,7 @@ const Expense: React.FC<Props> = (props) => {
             <IonCol size="4">{part}</IonCol>
           </IonRow>
         </IonGrid>
-      </IonItem>
+      </IonItem >
     );
   }
 
