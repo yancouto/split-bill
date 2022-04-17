@@ -1,6 +1,5 @@
 import React from "react";
 import Dinero from "dinero.js";
-import assert from "assert";
 
 export enum PageType {
   Start,

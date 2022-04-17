@@ -14,7 +14,6 @@ import { useContext } from "react";
 import "./Start.css";
 import { ChangePage, CurrentSplit, PageType, SplitState } from "./types";
 import Dinero from "dinero.js";
-import { totalmem } from "os";
 
 interface Props {
   state: SplitState;

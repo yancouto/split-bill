@@ -23,7 +23,6 @@
     "@types/react-dom": "^16.9.10",
     "@types/react-router": "^5.1.18",
     "@types/react-router-dom": "^5.3.3",
-    "assert": "^2.0.0",
     "babel-jest": "^27.4.2",
     "babel-loader": "^8.2.3",
     "babel-plugin-named-asset-import": "^0.3.8",
