@@ -56,13 +56,11 @@ export const stateToString = (s: PageState): string => {
     }
   }
 
-  console.log(JSON.stringify(json));
   return JSON.stringify(json);
 };
 
 export const stateFromString = (s: string): PageState => {
   const obj = JSON.parse(s);
-  console.log(obj);
   const type = obj["type"];
   if (type === PageType.Start) {
     return { type: PageType.Start };

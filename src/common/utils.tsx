@@ -1,6 +1,10 @@
 export function parseToFloat(v?: string | null): number {
   const parsed = Number.parseFloat(v ?? "");
-  return parsed;
+  if (Number.isNaN(parsed)) {
+    return 0;
+  } else {
+    return parsed;
+  }
 }
 
 export function nullthrows<T>(v: T | null | undefined): T {

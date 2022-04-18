@@ -77,7 +77,8 @@ const Expense: React.FC<Props> = (props) => {
                 placeholder="0"
                 value={shares}
                 min="0"
-                clearOnEdit={true}
+                clearOnEdit
+                class="ion-padding-horizontal"
                 onIonChange={(e) => {
                   changeShares(parseToFloat(e.detail.value) - shares);
                 }}

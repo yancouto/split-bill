@@ -32,7 +32,6 @@ Dinero.defaultPrecision = 2;
 
 const storage = new Storage();
 await storage.create();
-console.log("here");
 const STATE_KEY = "state";
 const initialState: PageState = await storage.get(STATE_KEY).then((value) => {
   if (value) {
